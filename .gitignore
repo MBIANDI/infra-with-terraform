@@ -13,3 +13,6 @@
 
 .idea
 default_variables.json
+
+# Json files
+*.json
