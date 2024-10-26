@@ -5,6 +5,7 @@ provider "azurerm" {
 
 # Define the input variables
 variable "ssh_public_key" {}
+variable "subscription_id" {}
 
 # Resource Group
 resource "azurerm_resource_group" "rg" {
