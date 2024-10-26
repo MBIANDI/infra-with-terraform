@@ -11,7 +11,7 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-
+    # test
     steps:
       # Checkout the repository
       - name: Checkout repository
@@ -31,7 +31,7 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_LOGGING }}
+          creds: ${{ secrets.AZURE_CREDENTIALS}}
 
       - name: Initialize Terraform
         run: |
