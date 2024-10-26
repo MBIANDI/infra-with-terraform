@@ -33,20 +33,23 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_LOGGING }}
 
-      # Initialize Terraform
-      - name: Terraform Init
-        run: terraform init
+      - name: Initialize Terraform
+        run: |
+          cd terraform/vm  
+          terraform init
 
-      # Validate Terraform configuration
-      - name: Terraform Validate
-        run: terraform validate
+      - name: Plan Terraform
+        run: |
+          cd terraform/vm  
+          echo "Planning Terraform..."
+          terraform plan \
+            -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}"  
 
-      # (Optional) Terraform Plan to see what will change
-      - name: Terraform Plan
-        run: terraform plan
-
-      # (Optional) Terraform Apply to apply changes
-      - name: Terraform Apply
-        if: github.event_name == 'push'
-        run: terraform apply -auto-approve
+      - name: Apply Terraform
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cd terraform/vm  
+          echo "Applying Terraform..."
+          terraform apply -auto-approve \
+            -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}"
 
