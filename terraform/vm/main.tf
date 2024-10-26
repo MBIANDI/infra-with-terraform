@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "rg" {
   location = "East US"                 # Change to your desired location
 }
 
-# Virtual Network
+# Virtual Network 
 resource "azurerm_virtual_network" "vnet" {
   name                = "tf-vnet"  # Change to your desired virtual network name
   location            = azurerm_resource_group.rg.location
