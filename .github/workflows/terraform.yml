@@ -33,7 +33,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_LOGGING }}
 
-      # Initialize Terraform
+      # Initialize Terraform ok
       - name: Terraform Init
         run: terraform init
 
