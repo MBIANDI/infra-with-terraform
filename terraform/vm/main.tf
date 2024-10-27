@@ -1,11 +1,18 @@
+# Define the input variables
+variable "ssh_public_key" {}
+variable "subscription_id" {}
+
 # Specify the required provider
 provider "azurerm" {
   features {}
 }
-
-# Define the input variables
-variable "ssh_public_key" {}
-variable "subscription_id" {}
+# provider "azurerm" {
+#   features {}
+#   client_id       = var.azure_client_id
+#   client_secret   = var.azure_client_secret
+#   subscription_id = var.azure_subscription_id
+#   tenant_id       = var.azure_tenant_id
+# }
 
 # Resource Group
 resource "azurerm_resource_group" "rg" {
