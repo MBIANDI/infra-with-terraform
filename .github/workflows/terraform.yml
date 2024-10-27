@@ -50,17 +50,11 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: 
-          terraform plan -out=tfplan
+          terraform plan -var="my_variable=${{ secrets.SSH_PUBLIC_KEY }}" -out=tfplan
         working-directory: terraform/
-
-      - name: Save Terraform Plan Output
-        if: github.event_name == 'push'
-        run: terraform show -json tfplan > plan.json
-        working-directory: terraform/
-        continue-on-error: true
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve -var="my_variable=${{ secrets.SSH_PUBLIC_KEY }}" tfplan 
         working-directory: terraform/
 
