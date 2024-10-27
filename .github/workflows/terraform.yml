@@ -50,11 +50,11 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: 
-          terraform plan -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}" -var="subscription_id=${{ ARM_SUBSCRIPTION_ID }}" -out=tfplan
+          terraform plan -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}" -out=tfplan
         working-directory: terraform/
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}" -var="subscription_id=${{ secrets.AZURE_CREDENTIALS.subscriptionId }}" tfplan    
+        run: terraform apply -auto-approve -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}" tfplan    
         working-directory: terraform/
 
