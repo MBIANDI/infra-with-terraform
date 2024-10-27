@@ -1,10 +1,11 @@
 # Define the input variables
 variable "ssh_public_key" {}
+variable "subscription_id" {}
 
 # Specify the required provider
 provider "azurerm" {
   features {}
-  subscription_id = "73517fa6-6488-4aa1-9ab4-a369c6d8afa6"
+  subscription_id = var.subscription_id
 }
 
 resource "azurerm_resource_group" "my_rg" {
