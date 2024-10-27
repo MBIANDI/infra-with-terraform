@@ -40,27 +40,27 @@ jobs:
 
       - name: Initialize Terraform
         run: |
-          cd terraform/vm  
+          cd terraform/ 
           terraform init
 
       - name: "Terraform Validate"
         run: terraform validate
-        working-directory: terraform/vm  
+        working-directory: terraform/
+      
+      - name: Terraform Plan
+        id: plan
+        run: 
+          terraform plan -out=tfplan
+        working-directory: terraform/
 
-      - name: Plan Terraform
-        run: |
-          cd terraform/vm  
-          echo "Planning Terraform..."
-          terraform plan \
-            -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}"  
-            -var="subscription_id=${{ secrets.AZURE_CREDENTIALS.subscription_id }}"
+      - name: Save Terraform Plan Output
+        if: github.event_name == 'push'
+        run: terraform show -json tfplan > plan.json
+        working-directory: terraform/
+        continue-on-error: true
 
-      - name: Apply Terraform
-        if: github.ref == 'refs/heads/main'
-        run: |
-          cd terraform/vm  
-          echo "Applying Terraform..."
-          terraform apply -auto-approve \
-            -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}"
-            -var="subscription_id=${{ secrets.AZURE_CREDENTIALS.subscription_id }}"
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve tfplan
+        working-directory: terraform/
 
