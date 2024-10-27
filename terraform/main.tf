@@ -8,7 +8,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "my_rg" {
-  name     = "my-terraform-resources"   # Name of the resource group
+  name     = "my-terraform-resources2"   # Name of the resource group
   location = "France Central"                  # Azure region where you want the resources
 }
 
